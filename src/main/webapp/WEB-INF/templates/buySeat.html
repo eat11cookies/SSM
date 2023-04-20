@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" th:href="@{/static/css/header.css}">
+  <link rel="stylesheet" th:href="@{/static/css/buySeat.css}">
+  <script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+
+</head>
+<body>
+
+<div class="header navbar navbar-fixed-top">
+  <div class="header-top">
+    <div class="header-inner">
+      <a th:href="@{/users/index}" class="logo" style="height:60px"><img th:src="@{/static/images/logo.png}"></a>
+      <div class="nav">
+        <ul>
+          <li><a href="">首页</a></li>
+          <li class="active"><a href="">电影</a></li>
+          <li><a href="">影院</a></li>
+          <li><a href="">榜单</a></li>
+          <li><a href="">热点</a></li>
+        </ul>
+      </div>
+      <div class="app-download">
+      </div>
+      <form action="">
+        <input name="searchMovie" class="search" type="search" maxlength="32" placeholder="找影视剧、影人、影院" autocomplete="off">
+        <input class="submit" type="submit" value="">
+      </form>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 30px;"></div>
+
+<div class="container">
+  <div class="order-progress-bar">
+    <div class="step first done">
+      <span class="step-num">1</span>
+      <div class="bar"></div>
+      <span class="step-next">选择影片场次</span>
+    </div>
+    <div class="step done">
+      <span class="step-num">2</span>
+      <div class="bar"></div>
+      <span class="step-next">选择座位</span>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <div class="bar"></div>
+      <span class="step-next">付款</span>
+    </div>
+    <div class="step last">
+      <span class="step-num">4</span>
+      <div class="bar"></div>
+      <span class="step-next">影院取票观影</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- 主页 -->
+    <div class="hall">
+      <div class="seat-example">
+        <div class="selectable-example example">
+          <span>可选座位</span>
+        </div>
+        <div class="sold-example example">
+          <span>已售座位</span>
+        </div>
+        <div class="selected-example example">
+          <span>已选座位</span>
+        </div>
+        <div class="couple-example example">
+          <span>情侣座位</span>
+        </div>
+      </div>
+      <div class="seats-block">
+        <div class="row-id-container">
+          <span class="row-id">1</span>
+          <span class="row-id">2</span>
+          <span class="row-id">3</span>
+          <span class="row-id">4</span>
+          <span class="row-id">5</span>
+          <span class="row-id">6</span>
+          <span class="row-id">7</span>
+          <span class="row-id">8</span>
+        </div>
+        <div class="seats-container">
+          <div class="screen-container">
+            <div class="screen">银幕中央</div>
+            <div class="c-screen-line"></div>
+          </div>
+          <div class="seats-wrapper">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 侧页 -->
+    <div class="side">
+      <!-- 电影 -->
+      <div class="movie-info clearfix" th:each="movie:${movie}">
+        <div class="poster">
+          <img th:src="@{'/static/images/'+${movie.img}}">
+        </div>
+        <div class="content">
+          <p class="name text-ellipsis" th:text="${movie.name}"></p>
+          <div class="info-item">
+            <span>类型：</span>
+            <span class="value" th:text="${movie.des}"></span>
+          </div>
+          <div class="info-item">
+            <span>时长：</span>
+            <span class="value" th:text="${movie.time}"></span>
+          </div>
+        </div>
+      </div>
+      <!-- 场次 -->
+      <div class="show-info" th:each="list:${list}">
+        <div class="info-item">
+          <span>影院：</span>
+          <span class="value text-ellipsis">万达影城（泉舜广场PRIME店）</span>
+        </div>
+        <div class="info-item">
+          <span>影厅：</span>
+          <span class="value3 text-ellipsis" th:text="${list.halls}"></span>
+        </div>
+        <div class="info-item">
+          <span>版本：</span>
+          <span class="value text-ellipsis" th:text="${list.lang}"></span>
+        </div>
+        <div class="info-item">
+          <span>场次：</span>
+          <span class="value2 text-ellipsis screen" th:text="'今日'+${m}+'月'+${y}+'  '+${list.begin}"></span>
+        </div>
+        <div class="info-item">
+          <span>票价：</span>
+          <span class="value1 text-ellipsis" th:text="'￥'+${list.price}+'/张'"></span>
+        </div>
+      </div>
+      <div class="ticket-info">
+        <div class="no-ticket" style="display: block;">
+          <p class="buy-limit">座位：一次最多选6个座位</p>
+        </div>
+        <div class="has-ticket" style="display: none;">
+          <span class="text">座位：</span>
+          <div class="ticket-container">
+          </div>
+        </div>
+        <div class="total-price">
+          <span>总价：</span>
+          <span class="price"></span>
+        </div>
+      </div>
+      <div class="confirm-order">
+        <div class="email">
+          <span>手机号：</span>
+          <span class="phone-num">15090180726</span>
+        </div>
+        <div class="confirm-btn disable">
+         <a th:href="@{'/movies/pay/'+${id}}" onclick="confirm()">确认选座</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script th:inline="javascript">
+  var seats = $(".seats-wrapper");
+  for (let i = 1; i < 9; i++) {
+    seats.append(
+            "<div class='row' >"+
+            "<span class='couple lover' row='"+i+"' line='1'>"+"</span>"+
+            "<span class='seat lover' onclick='setcss()' row='"+i+"' line='2'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='3'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='4'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='5'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='6'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='7'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='8'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='9'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='10'>"+"</span>"+
+            "<span class='seat lover' row='"+i+"' line='11'>"+"</span>"+
+            "</div>"
+    )
+  }
+</script>
+<script th:inline="javascript">
+  var NoTicket = $(".no-ticket")[0];
+  var HasTicket = $(".has-ticket")[0];
+  var TicketPrice = $(".price");
+  var Ticket = $(".has-ticket").find(".ticket-container");
+  let value = $(".value1").html();
+  value =value.replace("￥", "");
+  value =value.replace("/张", "");
+  console.log(value)
+  $(function setcss()
+  {
+    $(".seat").click(function () {
+      if ($(this).hasClass("seat"))
+      {$(this).removeClass("seat");
+      $(this).addClass("row selected");}
+      else{
+        $(this).removeClass("row selected");
+        $(this).addClass("seat");
+      }
+      Ticket.empty();
+      var length=document.getElementsByClassName("row selected").length;
+      if (length>0){
+        document.getElementsByClassName("confirm-btn")[0].style.background='#f03d37';
+        NoTicket.style.display = "none";
+        HasTicket.style.display = "block";
+      }else{
+        document.getElementsByClassName("confirm-btn")[0].style.background=null;
+        NoTicket.style.display = "block";
+        HasTicket.style.display = "none";
+      }
+      for (let i = 0; i < length; i++) {
+        var row=document.getElementsByClassName("row selected")[i].getAttribute("row")
+        var line=document.getElementsByClassName("row selected")[i].getAttribute("line")
+        Ticket.append("<span class=\"ticket\">" + row + "排" + line + "座</span>");
+      }
+      var num=document.getElementsByClassName("row selected").length
+      TicketPrice.text("￥"+value*num)
+    });
+  }
+  )</script>
+<script  th:inline="javascript">
+  function confirm() {
+    let json = localStorage.getItem("content");
+    console.log(json);
+    json = eval('(' + json + ')');
+    let value = $(".value2").html();
+    let hall = $(".value3").html();
+    let moviename1 = $(".name").html();
+    let phone = $(".phone-num").html();
+    let name=json.name;
+    const ticketContainer = $(".ticket-container").find(".ticket");
+    let price = $(".price").html();
+    price = price.replace("￥", "");
+    let TicketSeat = "";
+    for (var i = 0; i < ticketContainer.length; i++) {
+      TicketSeat += ticketContainer[i].innerHTML;
+      if (i < (ticketContainer.length - 1)) {
+        TicketSeat += ",";
+      }
+    }
+    json = {};
+    json.name = name;
+    json.hall=hall;
+    json.phone = phone;
+    json.moviename=moviename1;
+    json.value=value;
+    json.TicketSeat = TicketSeat;
+    json.price = price;
+    console.log(json);
+    localStorage.setItem("order", JSON.stringify(json));
+  }
+</script>
+</html>

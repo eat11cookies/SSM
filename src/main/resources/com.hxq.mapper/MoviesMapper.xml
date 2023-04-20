@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxq.mapper.MoviesMapper">
+
+<!--    List<Detail> selectDetail(Integer id);-->
+    <select id="selectDetail" parameterType="integer" resultType="Detail">
+        select * from detail where id=#{id}
+    </select>
+
+<!--    List<Director> selectDirector(Integer id);-->
+    <select id="selectDirector" parameterType="integer" resultType="Director">
+        select * from director where id=#{id}
+    </select>
+
+<!--    List<Actor> selectActor(Integer id);-->
+    <select id="selectActor" parameterType="integer" resultType="Actor">
+        select name,actor_id,actor_name,img from actor where actor_id=#{id}
+    </select>
+
+<!--    List<Cinema> showcinema();-->
+    <select id="showcinema" resultType="Cinema">
+        select * from cinema
+    </select>
+
+<!--    Cinema selectcinema(Integer id);-->
+    <select id="selectcinema" parameterType="integer" resultType="Cinema">
+        select name,address from cinema where id=#{id};
+    </select>
+
+<!--    List queryContent();-->
+    <select id="queryContent">
+        select distinct movies.name,movies.score,director.name,detail.des1 from movies,director,detail,actor where movies.id=director.id=detail.id
+    </select>
+
+<!--    List<Plist> selectlist();-->
+    <select id="selectlist" resultType="Plist">
+        select * from list
+    </select>
+
+<!--    List<Plist> selectlistById(Integer id);-->
+    <select id="selectlistById" resultType="Plist" parameterType="integer">
+        select * from list where id=#{id}
+    </select>
+
+<!--    List<Movies> getMovieById(Integer id);-->
+    <select id="getMovieById" resultType="Movies" parameterType="integer">
+        select * from movies where id=#{id}
+    </select>
+
+<!--    void addOrders(Orders orders);-->
+    <insert id="addOrders" parameterType="Orders">
+        insert into orders values (#{moviename},#{phone},#{name},#{value},#{ticketSeat})
+    </insert>
+</mapper>

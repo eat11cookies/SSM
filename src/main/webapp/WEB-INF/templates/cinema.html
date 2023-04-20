@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" th:href="@{/static/css/selectSeat.css}">
+    <script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+</head>
+<body>
+<div class="header navbar navbar-fixed-top">
+    <div class="header-top">
+        <div class="header-inner">
+            <a th:href="@{/users/index}" class="logo" style="height:60px"><img th:src="@{/static/images/logo.png}"></a>
+            <div class="nav">
+                <ul>
+                    <li><a href="">首页</a></li>
+                    <li class="active"><a href="">电影</a></li>
+                    <li><a href="">影院</a></li>
+                    <li><a href="">榜单</a></li>
+                    <li><a href="">热点</a></li>
+                </ul>
+            </div>
+            <div class="app-download">
+            </div>
+            <form action="">
+                <input name="searchMovie" class="search" type="search" maxlength="32" placeholder="找影视剧、影人、影院" autocomplete="off">
+                <input class="submit" type="submit" value="">
+            </form>
+        </div>
+    </div>
+</div>
+<div class="banner2">
+    <div class="wrapper clearfix">
+        <div class="cinema-left">
+            <div class="avatar-shadow">
+                <img th:src="@{/static/images/cinema.png}" class="avatar">
+            </div>
+        </div>
+        <div class="cinema-main clearfix">
+            <div class="cinema-brief-container" th:each="cinema:${cinema}">
+                <h1 class="name text-ellipsis " th:text="${cinema.name}"></h1>
+                <div class="address text-ellipsis " th:text="${cinema.address}"></div>
+                <div class="telphone">电话：0335-2661222</div>
+                <div class="features-group">
+                    <div class="group-title">影院服务</div>
+                    <div class="feature">
+                        <span class="tag ">3D眼镜</span>
+                        <p class="desc text-ellipsis" title="免押金">免费发放3D眼镜（框架），夹片及儿童3D眼镜需购买。</p>
+                    </div>
+                    <div class="feature">
+                        <span class="tag ">儿童优惠</span>
+                        <p class="desc text-ellipsis" title="儿童优惠">1.3米以下观看2D/3D均无需购票；每位大人仅可带领1名儿童，免票儿童不提供座</p>
+                    </div>
+                    <div class="feature">
+                        <span class="tag ">WiFi</span>
+                        <p class="desc text-ellipsis" title="WiFi">影城有免费WiFi</p>
+                    </div>
+                    <div class="feature">
+                        <span class="tag ">可停车</span>
+                        <p class="desc text-ellipsis" title="可停车">停车场可凭电影票在影城票台领取3小时内免停权益</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div style="margin-top: 50px;"></div>
+<div class="main">
+    <div class="main-inner main-bodyz">
+        <div class="movie-list-container">
+            <!-- 电影海报 -->
+            <div class="movie-list">
+                <div class="movie active" id="content" data-id="1"><img th:src="@{/static/images/满江红.jpg}" th:onclick="setcss()"></div>
+                <div class="movie" data-id="2"><img th:src="@{/static/images/流浪地球2.jpg}"></div>
+                <div class="movie" data-id="3"><img th:src="@{/static/images/黑豹2.jpg}"></div>
+                <div class="movie" data-id="4"><img th:src="@{/static/images/深海.jpg}"></div>
+                <div class="movie" data-id="5"><img th:src="@{/static/images/无名.jpg}"></div>
+                <div class="movie" data-id="6"><img th:src="@{/static/images/熊出没.jpg}"></div>
+            </div>
+        </div>
+
+        <div class="show-list active" data-index="0">
+            <!-- 电影信息 -->
+            <div class="movie-info">
+            </div>
+            <!-- 观影时间 -->
+            <div class="show-date">
+                <span>观影时间 :</span>
+                <span class="date-item active"  th:text="@{'今天'+${m}+'月'+${y}+'日'}"></span>
+            </div>
+            <!-- 场次列表 -->
+            <div class="plist-container active">
+                <table class="plist">
+                    <thead>
+                    <tr>
+                        <th>放映时间</th>
+                        <th>语言版本</th>
+                        <th>放映厅</th>
+                        <th>售价（元）</th>
+                        <th>选座购票</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="list:${list}">
+                        <tr>
+                            <td>
+                                <span class="begin-time" th:text="${list.begin}"></span><br>
+                                <span class="end-time" th:text="${list.end}"></span>
+                            </td>
+                            <td>
+                                <span class="lang" th:text="${list.lang}"></span>
+                            </td>
+                            <td>
+                                <span class="halls" th:text="${list.halls}"></span>
+                            </td>
+                            <td>
+                                <span class="sell-price" th:text="${list.price}"></span>
+                            </td>
+                            <td>
+                                <a th:href="@{'/movies/buyseat/'+${list.id}}" class="buy-btn" onclick="confirm()">选座购票</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="foot1"></div>
+</body>
+<script th:inline="javascript">
+    window.onload= function() {
+        init();
+    }
+    function init() {
+        const id = document.getElementsByClassName("movie active")[0].getAttribute("data-id");
+        $.ajax({
+            url:"../../users/allusers",
+            type:"POST",
+            contentType:"application/json",
+            dataType:"json",
+            async:false,
+            success:function (result) {
+                initMoive(result,id);
+            }
+        });
+    }
+    $(".movie").click(function(){
+            const id = $(this).attr("data-id");
+        $.ajax({
+            url:"../../users/allusers",
+            type:"POST",
+            contentType:"application/json",
+            dataType:"json",
+            success:function (result) {
+                initMoive(result,id);
+            }
+        });
+    })
+
+    function initMoive(result,id) {
+        var movieInfo = $(".movie-info");
+        movieInfo.empty();
+        movieInfo.append(
+            "<div>" +
+            "<h3 class=\"movie-name\">"+ result[id-1].name +"</h3>" +
+            "<span class=\"score sc\">"+ result[id-1].score +"</span>" +
+            "</div>"+
+            "<div class=\"movie-desc\">" +
+            "<div>" +
+            "<span class=\"key\">时长 : </span>" +
+            "<span class=\"time\">"+ result[id-1].time +"</span>" +
+            "</div>"+
+            "<div>" +
+            "<span class=\"key\">导演 :</span>" +
+            "<span class=\"value\">"+ result[id-1].dirName+"</span>" +
+            "</div>"+
+            "<div>" +
+            "<span class=\"key\">类型 :</span>" +
+            "<span class=\"des\">"+ result[id-1].des+"</span>" +
+            "</div>" +
+            "</div>"
+        )
+    }
+
+    $(function setcss()
+    {
+        $(".movie").click(function () {
+            $(this).removeClass("movie");
+            $(this).addClass(" movie active");
+            $(this).siblings().removeClass("movie active");
+            $(this).siblings().addClass("movie");
+        });
+    }
+    )
+</script>
+<script th:inline="javascript">
+    function confirm() {
+        let name = $(".name").html();
+        let moviename = $(".movie-name").html();
+        let time = $(".time").html();
+        let des = $(".des").html();
+        let img = $(".movie active img").attr("src");
+        const json = {};
+        json.name = name;
+        json.moviename = moviename;
+        json.time = time;
+        json.des = des;
+        json.img = img;
+        console.log(json);
+        localStorage.setItem("content", JSON.stringify(json));
+    }
+</script>
+</html>

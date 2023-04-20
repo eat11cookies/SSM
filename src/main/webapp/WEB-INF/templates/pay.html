@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" th:href="@{/static/css/header.css}">
+  <link rel="stylesheet" th:href="@{/static/css/pay.css}">
+  <script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+</head>
+<body>
+<div class="header navbar navbar-fixed-top">
+  <div class="header-top">
+    <div class="header-inner">
+      <a th:href="@{/users/index}" class="logo" style="height:60px"><img th:src="@{/static/images/logo.png}"></a>
+      <div class="nav">
+        <ul>
+          <li><a href="">首页</a></li>
+          <li class="active"><a href="">电影</a></li>
+          <li><a href="">影院</a></li>
+          <li><a href="">榜单</a></li>
+          <li><a href="">热点</a></li>
+        </ul>
+      </div>
+      <div class="app-download">
+      </div>
+      <form action="">
+        <input name="searchMovie" class="search" type="search" maxlength="32" placeholder="找影视剧、影人、影院" autocomplete="off">
+        <input class="submit" type="submit" value="">
+      </form>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 30px;"></div>
+
+<div class="container">
+  <div class="order-progress-bar">
+    <div class="step first done">
+      <span class="step-num">1</span>
+      <div class="bar"></div>
+      <span class="step-next">选择影片场次</span>
+    </div>
+    <div class="step done">
+      <span class="step-num">2</span>
+      <div class="bar"></div>
+      <span class="step-next">选择座位</span>
+    </div>
+    <div class="step done">
+      <span class="step-num">3</span>
+      <div class="bar"></div>
+      <span class="step-next">付款</span>
+    </div>
+    <div class="step last">
+      <span class="step-num">4</span>
+      <div class="bar"></div>
+      <span class="step-next">影院取票观影</span>
+    </div>
+  </div>
+  <div class="count-down-wrapper">
+    <div class="count-down">
+      <p class="time-left">
+        请在<span class="minute"></span>分钟<span class="second"></span>秒内完成支付
+      </p>
+      <p class="tip">超时订单会自动取消，如遇支付问题，请联系管理员</p>
+    </div>
+  </div>
+
+  <p class="warning">
+    请仔细核对场次信息，出票后将<span class="attention">无法退票和改签</span>
+  </p>
+
+  <table class="order-table">
+    <thead>
+    <tr>
+      <th>影片</th>
+      <th>时间</th>
+      <th>影院</th>
+      <th>座位</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 信息表 -->
+    </tbody>
+  </table>
+
+  <div class="right">
+    <div class="price-wrapper">
+      <span>实际支付：</span>
+      <span class="price"></span>
+    </div>
+    <div>
+      <div class="pay-btn" onclick="confirm()">
+        <a th:href="@{'/movies/success'}">确认支付</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script th:inline="javascript">
+  window.onload=function () {
+    init();
+    timeDown();
+  }
+  let json = localStorage.getItem("order");
+  console.log(json);
+  json = eval('(' + json + ')');
+  moviename = json.moviename;
+  name = json.name;
+  value = json.value;
+  hall = json.hall;
+  price = json.price;
+  ticketSeat=json.TicketSeat;
+  phone=json.phone;
+  function init() {
+    var orderTable = $(".order-table").find("tbody");
+    orderTable.append(
+            "<tr>" +
+            "<td class=\"movie-name\">" + moviename + "</td>" +
+            "<td class=\"showtime\">" + value + "</td>" +
+            "<td class=\"cinema-name\">" + name + "</td>" +
+            "<td>" +
+            "<span class=\"hall\">" + hall + "</span>" +
+            "<div class=\"seats\">" +
+            "<div class=\"choiceseat\" style=\"display: block;\">" +
+            "</div>" +
+            "</div>" +
+            "</td>" +
+            "<tr>"
+    );
+    var choiceSeat = $(".choiceseat");
+    var TempLength = json.TicketSeat.split(",");
+    for (var i = 0; i < TempLength.length; i++) {
+      choiceSeat.append("<span class=\"border\" style=\"font-size: 15px;\">" + TempLength[i] + "</span>");
+    }
+    $(".price").html(price);
+  }
+
+  function timeDown(){
+    var timeMinute = $(".minute");
+    var timeSecond = $(".second");
+    var minute;
+    var second;
+    timeMinute.text(localStorage.minute);
+    timeSecond.text(localStorage.second);
+    setInterval(function(){
+      if(second==0 && minute==0){
+        window.alert("支付时间已过，订单失效！");
+        localStorage.clear();
+      }
+      if((localStorage.second == "NaN") || (localStorage.second == 0 && localStorage.minute == 0))
+      {
+        localStorage.minute = 14;
+        localStorage.second = 59;
+      }
+      second = localStorage.second;
+      minute = localStorage.minute;
+      if(second==0){
+        minute--;
+        second = 60;
+      }
+      second--;
+      timeMinute.text(minute);
+      timeSecond.text(second);
+      localStorage.second = second;
+      localStorage.minute = minute;
+    },1000);
+  }
+
+  function  confirm(){
+    $.ajax({
+      url:'../../movies/buy',
+      type:'post',
+      data:JSON.stringify({moviename:moviename,value:value,name:name,ticketSeat:ticketSeat,phone:phone}),
+      contentType:"application/json;charset=utf-8",
+      success:function(data){
+      }
+    });
+  }
+</script>
+</body>
+</html>

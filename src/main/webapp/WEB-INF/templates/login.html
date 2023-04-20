@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/login.css}">
+    <script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+    <script th:inline="javascript">
+        const  text=[[${text}]];
+        if (text!=null) {alert(text);}
+        // console.log(text);
+    </script>
+</head>
+<body>
+<form th:action="@{/users/login}" method="post">
+<heander class="header">
+    <a class="logo"></a>
+</heander>
+<div class="body">
+    <div class="banner">
+        <img th:src="@{/static/images/logo1.png}"/>
+    </div>
+    <div>
+        <div id="app">
+            <div id="comp">
+                <div style="display: block">
+                    <div class="height"></div>
+                    <div class="num-wrapper" id="phoneNum">
+                        <input type="tel" name="phonenum" class="num-input" autocomplete="off" placeholder="请输入手机号" maxlength="11">
+                    </div>
+                    <div class="pwd-wrapper" id="password">
+                        <input type="password" name="password" class="pwd-input" autocomplete="off" placeholder="请输入密码" maxlength="11">
+                    </div>
+                    <div class="optn-wrapper" id="optn">
+                        <button class="optn" id="loginoptn" type="submit">登录</button>
+                    </div>
+                    <div class="confirm-wrapper">
+                        <label id="confirm">
+                            <input type="checkbox" autocomplete="off" class="checkbox">
+                        </label>
+                        <i></i>
+                        <div class="confirm-text">
+                            <div class="copyright">
+                                "我已阅读并同意"
+                                <a>《猫眼用户服务协议》</a>
+                                <a>《隐私策略》</a>
+                                <div style="margin-top: 20px;">
+                                    客服电话：
+                                    <a style="font-size: 8px">1010-1055</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text">未注册的手机号将自动生成新账号</div>
+    </div>
+</div>
+</form>
+</body>
+</html>

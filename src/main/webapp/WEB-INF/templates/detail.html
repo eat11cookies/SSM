@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" th:href="@{/static/css/header.css}">
+  <link rel="stylesheet" th:href="@{/static/css/buyTickets.css}">
+  <link rel="stylesheet" th:href="@{/static/css/movieDetail.css}">
+</head>
+<body>
+<!--导航栏-->
+<div class="header navbar navbar-fixed-top">
+  <div class="header-top">
+    <div class="header-inner">
+        <a th:href="@{/users/index}" class="logo" style="height:60px"><img th:src="@{/static/images/logo.png}"></a>
+      <div class="nav">
+        <ul>
+          <li><a href="">首页</a></li>
+          <li class="active"><a href="">电影</a></li>
+          <li><a href="">影院</a></li>
+          <li><a href="">榜单</a></li>
+          <li><a href="">热点</a></li>
+        </ul>
+      </div>
+      <div class="app-download">
+      </div>
+      <form action="">
+        <input name="searchMovie" class="search" type="search" maxlength="32" placeholder="找影视剧、影人、影院" autocomplete="off">
+        <input class="submit" type="submit" value="">
+      </form>
+    </div>
+  </div>
+</div>
+<div class="banner2">
+  <div class="wrapper clearfix" th:each="details:${details}">
+    <div class="celeInfo-left">
+      <div class="avatar-shadow">
+        <!-- 图片 -->
+        <img class="avater" th:src="@{'/static/images/'+${details.img}}">
+      </div>
+    </div>
+    <div class="celeInfo-right clearfix">
+      <div class="movie-brief-container">
+        <h1 class="name" th:text="${details.name}"></h1>
+        <div class="ename" th:text="${details.translate}"></div>
+        <ul>
+          <li th:text="${details.des1}"></li>
+          <li th:text="${details.des2}"></li>
+          <li th:text="${details.des3}"></li>
+        </ul>
+      </div>
+      <div class="action-buyBtn">
+        <div class="action clearfix" data-val="{movieid:42964}">
+          <a class="wish " data-wish="false">
+            <div>
+              <i class="icon wish-icon"></i>
+              <span class="wish-msg" data-act="wish-click">想看</span>
+            </div>
+          </a>
+          <a class="score-btn " data-bid="b_rxxpcgwd" onclick="giveScore()">
+            <div>
+              <i class="icon score-btn-icon"></i>
+              <span class="score-btn-msg" data-act="comment-open-click">评分</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="movie-stats-container">
+        <div class="movie-index">
+          <p class="movie-index-title">用户评分</p>
+          <div class="movie-index-content score normal-score">
+                            <span class="index-left info-num ">
+                                <span class="stonefont" th:text="${details.score}"></span>
+                            </span>
+            <div class="index-right">
+              <div class="star-wrapper">
+                <div class="star-on"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="movie-index">
+          <p class="movie-index-title">累计票房</p>
+          <div class="movie-index-content box stonefont-num">
+            <!-- 票房数 -->
+            <span class="stonefont" th:text="${details.sum}"></span>
+            <span class="unit">亿</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-top: 50px;"></div>
+<div class="main">
+  <div class="main-inner main-detail">
+    <div class="main-content">
+      <div class="tab-container">
+        <div class="tab-title-container clearfix">
+          <div class="tab-title active" data-act="tab-desc-click">介绍</div>
+        </div>
+
+        <div class="tab-content-container">
+          <div class="tab-desc tab-content active" th:each="director:${director}">
+            <!-- 剧情简介 -->
+            <div class="module introduction">
+              <div class="mod-title">
+                <h3>剧情简介</h3>
+                <span class="dra" th:text="${director.content}">
+                </span>
+              </div>
+            </div>
+            <!-- 演职人员 -->
+            <div class="module staringPeople" >
+              <div class="mod-title">
+                <h3>演职人员</h3>
+              </div>
+              <div class="mod-content">
+                <div class="celebrity-container">
+                  <div class="celebrity-group">
+                    <div class="celebrity-type">导演</div>
+                    <ul class="celebrity-list">
+                      <li class="celebrity">
+                        <img class="default-img" th:src="@{'/static/images/director/'+${director.img}}">
+                        <div class="name" th:text="${director.name}"></div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="celebrity-group">
+                    <div class="celebrity-type">演员</div>
+                    <ul class="celebrity-list">
+                      <li class="celebrity" th:each="actors:${actors}">
+                        <img class="default-img" th:src="@{'/static/images/actor/'+${actors.img}}">
+                        <div class="name" th:text="${actors.name}"></div>
+                        <div class="role" th:text="${actors.actorName}"></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="foot"></div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+	.main-content {
+	    width: 1130px;
+	    float: left;
+		margin-left: 120px;
+	}
+	li{
+		list-style: none;
+	}
+	.tab-container .tab-title-container {
+		width: 1130px;
+		height: 30px;
+    	border-bottom: 2px solid #eee;
+	}
+	.tab-container .tab-title-container .tab-title.active {
+	    color: #ef4238;
+	    border-bottom-color: #ef4238;
+	}
+	.tab-container .tab-title-container .tab-title {
+	    cursor: pointer;
+	    float: left;
+	    margin-right: 30px;
+	    margin-bottom: -2px;
+	    padding-bottom: 10px;
+	    font-size: 18px;
+	    color: #333;
+	    line-height: 100%;
+	    border-bottom: 2px solid transparent;
+	}
+	.tab-container .tab-title-container .tab-title.tab-disabled {
+	    color: #999;
+	    cursor: not-allowed;
+	}
+
+	.tab-container .tab-content-container .tab-content.active {
+	    display: block;
+	}
+	.tab-container .tab-content-container .tab-content {
+	    display: none;
+	}
+
+	.tab-desc {
+	    margin-top: 40px;
+	}
+	.module {
+	    position: relative;
+	    margin-bottom: 60px;
+	}
+	.module .mod-title h3 {
+	    display: inline-block;
+	    margin: 0;
+	    padding: 0;
+	    font-weight: 400;
+	    font-size: 18px;
+	    color: #333;
+	    line-height: 18px;
+	}
+	.module .mod-title h3:before {
+	    float: left;
+	    content: "";
+	    display: inline-block;
+	    width: 4px;
+	    height: 18px;
+	    margin-right: 6px;
+	    background-color: #ef4238;
+	}
+	.module .mod-content {
+	    margin-top: 20px;
+	    color: #333;
+	}
+	.tab-desc .dra {
+	    font-size: 14px;
+	    line-height: 26px;
+		display: block;
+		text-indent: 50px;
+		margin-top: 20px;
+	}
+	.module .mod-title .more {
+	    float: right;
+	    cursor: pointer;
+	    font-size: 14px;
+	    color: #999;
+	    padding-right: 14px;
+	    background:  no-repeat 100%;
+	}
+	/*.clearfix:after, .clearfix:before {*/
+	/*    content: " ";*/
+	/*    display: table;*/
+	/*}*/
+	.tab-desc .celebrity-container .celebrity-group:first-child {
+    margin-left: 0;
+	}
+	.tab-desc .celebrity-container .celebrity-group {
+	    float: left;
+	    margin-left: 45px;
+	}
+	.celebrity-container .celebrity-type {
+    	margin-bottom: 16px;
+	}
+	.celebrity-container .celebrity-list {
+    	margin-left: -20px;
+	}
+	.tab-desc .celebrity-container .celebrity-group .celebrity {
+    margin-bottom: 0;
+	}
+	.celebrity-container .celebrity {
+	    float: left;
+	    width: 128px;
+	    margin-left: 20px;
+	    margin-bottom: 20px;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	}
+	.celebrity-container .celebrity .portrait {
+	    margin-bottom: 6px;
+	    width: 128px;
+	    height: 170px;
+	    overflow: hidden;
+	}
+	.celebrity-container .celebrity .portrait img {
+	    width: 128px;
+	    height: 170px;
+	}
+	.default-img {
+	    background-position: 50%;
+	    background-size: 68px 62px;
+	    background-repeat: no-repeat;
+	}
+	.celebrity-container .celebrity .name {
+	    margin-top: 8px;
+	    line-height: 1;
+	    color: #333;
+	}
+	/*, .celebrity-container .celebrity .role*/
+	  .celebrity-container .celebrity .name{
+	    display: block;
+	    width: 128px;
+	    text-align: center;
+	    padding-bottom: 1px;
+	    margin-bottom: -1px;
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+	    white-space: nowrap;
+	}
+	.celebrity-container .celebrity .role{
+		font-size: 14px;
+		line-height: 1.2;
+		color: #666;
+		margin-top: 3px;
+		text-align: center;
+	}
+	.foot{
+		margin-top: 700px;
+		height: 150px;
+		background-color: #262426;
+	}
+	.foot1{
+		margin-top: 150px;
+		height: 150px;
+		background-color: #262426;
+	}
+

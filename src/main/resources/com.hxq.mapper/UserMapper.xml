@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxq.mapper.UserMapper">
+    <!--    查询账号是否存在-->
+    <!--    Integer selectlogin(String phonenum);-->
+    <select id="selectlogin" resultType="integer" parameterType="String">
+        select count(*) from user where phonenum=#{phonenum}
+    </select>
+    <!--    添加账号-->
+    <!--    void addUser(User  user);-->
+    <insert id="addUser" parameterType="com.hxq.pojo.User">
+        insert into user values (#{phonenum},#{password})
+    </insert>
+
+<!--    String selectpwd(String phonenum);-->
+    <select id="selectpwd" resultType="string" parameterType="String">
+        select  password from user where phonenum=#{phonenum}
+    </select>
+
+    <!--    List<Movies> getAllMovies();-->
+    <select id="getAllMovies" resultType="Movies">
+        select * from movies
+    </select>
+
+    <!--    List<Advance> getAllAdvance();-->
+    <select id="getAllAdvance" resultType="Advance">
+        select * from advance
+    </select>
+
+<!--    List queryContent();-->
+    <select id="queryContent">
+        select distinct movies.name,movies.score,director.name,detail.des1 from movies,director,detail,actor where movies.id=director.id and director.id=detail.id
+    </select>
+</mapper>

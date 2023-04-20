@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" th:href="@{/static/css/header.css}">
+  <link rel="stylesheet" th:href="@{/static/css/success.css}">
+</head>
+<body>
+<div class="header navbar navbar-fixed-top">
+  <div class="header-top">
+    <div class="header-inner">
+      <a th:href="@{/users/index}" class="logo" style="height:60px"><img th:src="@{/static/images/logo.png}"></a>
+      <div class="nav">
+        <ul>
+          <li><a href="">首页</a></li>
+          <li class="active"><a href="">电影</a></li>
+          <li><a href="">影院</a></li>
+          <li><a href="">榜单</a></li>
+          <li><a href="">热点</a></li>
+        </ul>
+      </div>
+      <div class="app-download">
+      </div>
+      <form action="">
+        <input name="searchMovie" class="search" type="search" maxlength="32" placeholder="找影视剧、影人、影院" autocomplete="off">
+        <input class="submit" type="submit" value="">
+      </form>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 30px;"></div>
+
+<div class="container">
+  <div class="order-progress-bar">
+    <div class="step first done">
+      <span class="step-num">1</span>
+      <div class="bar"></div>
+      <span class="step-next">选择影片场次</span>
+    </div>
+    <div class="step done">
+      <span class="step-num">2</span>
+      <div class="bar"></div>
+      <span class="step-next">选择座位</span>
+    </div>
+    <div class="step done">
+      <span class="step-num">3</span>
+      <div class="bar"></div>
+      <span class="step-next">付款</span>
+    </div>
+    <div class="step last">
+      <span class="step-num">4</span>
+      <div class="bar"></div>
+      <span class="step-next">影院取票观影</span>
+    </div>
+  </div>
+  <div class="main-paystatus">
+    <img th:src="@{/static/images/success.jpg}"/>
+    <p class="statustext">已完成支付</p>
+  </div>
+  <div class="right">
+    <p class="warning">
+      该页面关闭后可以在<span class="attention">个人订单</span>页面查看订单信息
+    </p>
+    <div>
+      <div class="pay-btn">
+        <a th:href="@{/users/index}">返回主页</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
